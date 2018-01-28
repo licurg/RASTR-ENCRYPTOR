@@ -1,0 +1,75 @@
+﻿<Window x:Class="RASTR_2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RASTR_2"
+        mc:Ignorable="d"
+        Title="RASTR-ENCRYPTOR" Height="720" Width="1100" ResizeMode="CanMinimize" Loaded="OnLoad" Background="#FAFAFA" Name="window" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="./assets/styles/Styles.xaml"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Margin="5,0,5,0">
+            <Label Content="RASTR-ENCRYPTOR" Style="{StaticResource Logo}"/>
+        </WrapPanel>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Row="1" Margin="10,5,10,0">
+            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Label Content="Завантажити зображення:"/>
+                <WrapPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <TextBox Name="imagePath" Width="350" IsReadOnly="True" Style="{StaticResource MainTextBox}"/>
+                    <Button Click="OpenImg" Content="Відкрити" Width="100" Margin="5,0,0,0" Style="{StaticResource MainButton}"/>
+                </WrapPanel>
+            </StackPanel>
+            <StackPanel Name="algSelection" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50,0,0,0">
+                <Label Content="Обрати алгоритм шифрування:"/>
+                <ComboBox Name="algorithms" SelectionChanged="AlgChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="455">
+                    <ComboBoxItem Content="Перестановка пікселів блоками N*N" IsSelected="True"/>
+                    <ComboBoxItem Content="DES"/>
+                    <ComboBoxItem Content="TripleDES"/>
+                    <ComboBoxItem Content="AES"/>
+                    <ComboBoxItem Content="RC2"/>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Name="keyUpload" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="50,0,0,0" Visibility="Collapsed">
+                <Label Content="Завантажити ключ розшифровки:"/>
+                <WrapPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <TextBox Name="keyPath" Width="350" IsReadOnly="True" Style="{StaticResource MainTextBox}"/>
+                    <Button Click="OpenKey" Content="Відкрити" Width="100" Margin="5,0,0,0" Style="{StaticResource MainButton}"/>
+                </WrapPanel>
+            </StackPanel>
+        </WrapPanel>
+        <TabControl SelectionChanged="ActionChanged" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="2" Margin="10,20,10,0" Height="230">
+            <TabItem Header="Шифратор" Name="encryptorSettings"/>
+            <TabItem Header="Дешифратор" Name="decryptorSettings"/>
+        </TabControl>
+        <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50,0,0,0" Grid.Row="3">
+            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Label Content="Дії:" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                <WrapPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Button Click="StartEncryption" Name="encrypt" Content="Зашифрувати" Margin="5" Width="125" Style="{StaticResource MainButton}"/>
+                    <Button Click="StartDecryption" Content="Розшифрувати" Margin="5" Width="125" Style="{StaticResource MainButton}"/>
+                    <Button Click="StartExport" Content="Експортувати" Margin="5" Width="125" Style="{StaticResource MainButton}"/>
+                </WrapPanel>
+            </StackPanel>
+        </WrapPanel>
+        <WrapPanel VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0,10,5,0" Grid.Row="3">
+            <GroupBox Header="Завантажене зображення" Margin="5">
+                <Border Width="256" Height="256" Background="#B39DDB" Margin="5" Cursor="Hand">
+                    <Image MouseLeftButtonDown="OpenImageInWindow" Name="uploadedImg" Width="256" Height="256" Stretch="Fill"/>
+                </Border>
+            </GroupBox>
+            <GroupBox Header="Оброблене зображення" Margin="5">
+                <Border Width="256" Height="256" Background="#B39DDB" Margin="5" Cursor="Hand">
+                    <Image MouseLeftButtonDown="OpenImageInWindow" Name="processedImg" Width="256" Height="256" Stretch="Fill"/>
+                </Border>
+            </GroupBox>
+        </WrapPanel>
+    </Grid>
+</Window>
